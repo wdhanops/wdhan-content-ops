@@ -459,21 +459,43 @@ function handleOAuthCallback() {
 
 async function fetchUserInfo() {
   try {
+    // Try userinfo endpoint first
     const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${accessToken}` } });
     const data = await res.json();
-    const email = (data.email || '').trim().toLowerCase();
-    console.log('DEBUG auth email:', email, '| expected:', ALLOWED_EMAIL);
+    let email = (data.email || '').trim().toLowerCase();
+
+    // Fallback: decode from JWT token if email not in userinfo
+    if (!email) {
+      try {
+        const parts = accessToken.split('.');
+        if (parts.length === 3) {
+          const payload = JSON.parse(atob(parts[1].replace(/-/g,'+').replace(/_/g,'/')));
+          email = (payload.email || '').trim().toLowerCase();
+        }
+      } catch(e) {}
+    }
+
+    // Fallback 2: tokeninfo endpoint
+    if (!email) {
+      try {
+        const tr = await fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${accessToken}`);
+        const td = await tr.json();
+        email = (td.email || '').trim().toLowerCase();
+      } catch(e) {}
+    }
+
     alert('Signed in as: [' + email + ']\nExpected: [' + ALLOWED_EMAIL.toLowerCase() + ']\nMatch: ' + (email === ALLOWED_EMAIL.toLowerCase()));
+
     if (!email || email !== ALLOWED_EMAIL.toLowerCase()) {
       accessToken = '';
-      showAccessDenied(data.email || 'unknown');
+      showAccessDenied(email || 'unknown');
       return;
     }
     showConnected(email);
     state.connected = true;
     const existing = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
     localStorage.setItem('wdhan_state', JSON.stringify({ ...existing, accessToken, userEmail: email }));
-  } catch(e) {}
+  } catch(e) { alert('Auth error: ' + e.message); }
 }
 
 function showAccessDenied(email) {
