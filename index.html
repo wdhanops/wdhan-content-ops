@@ -391,6 +391,7 @@
 <script>
 const CLIENT_ID = '335288171960-jm2o6bka6n1p8g4s1p9s68h7je319e8o.apps.googleusercontent.com';
 const SCOPES = 'https://www.googleapis.com/auth/drive';
+const ALLOWED_EMAIL = 'wdhanmusic@gmail.com';
 let accessToken = '';
 
 let state = {
@@ -425,10 +426,15 @@ function loadState() {
     if (saved.library) state.library = saved.library;
     if (saved.customTags) state.customTags = saved.customTags;
     if (saved.accessToken) {
-      accessToken = saved.accessToken;
-      state.connected = true;
-      showConnected(saved.userEmail || '');
-      loadFolder('root');
+      if (saved.userEmail && saved.userEmail.toLowerCase() !== ALLOWED_EMAIL.toLowerCase()) {
+        delete saved.accessToken; delete saved.userEmail;
+        localStorage.setItem('wdhan_state', JSON.stringify(saved));
+      } else {
+        accessToken = saved.accessToken;
+        state.connected = true;
+        showConnected(saved.userEmail || '');
+        loadFolder('root');
+      }
     }
   } catch(e) {}
   renderTagSidebar();
@@ -456,11 +462,28 @@ async function fetchUserInfo() {
     const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${accessToken}` } });
     const data = await res.json();
     const email = data.email || '';
+    if (email.toLowerCase() !== ALLOWED_EMAIL.toLowerCase()) {
+      accessToken = '';
+      showAccessDenied(email);
+      return;
+    }
     showConnected(email);
     state.connected = true;
     const existing = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
     localStorage.setItem('wdhan_state', JSON.stringify({ ...existing, accessToken, userEmail: email }));
   } catch(e) {}
+}
+
+function showAccessDenied(email) {
+  document.body.innerHTML = `
+    <div style="min-height:100vh;background:#080808;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;">
+      <div style="background:#111;border:1px solid #ff3c3c;border-radius:8px;padding:48px;text-align:center;max-width:400px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:4px;color:#ff3c3c;margin-bottom:8px;">ACCESS DENIED</div>
+        <div style="font-family:'DM Mono',monospace;font-size:12px;color:#666;margin-bottom:24px;">${email}</div>
+        <div style="font-size:14px;color:#666;margin-bottom:28px;line-height:1.6;">This account is not authorized to access WD-HAN Content Ops.</div>
+        <button onclick="window.location.reload()" style="background:#e8ff00;color:#080808;border:none;border-radius:4px;padding:10px 24px;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:1px;cursor:pointer;text-transform:uppercase;">Try Again</button>
+      </div>
+    </div>`;
 }
 
 function showConnected(email) {
