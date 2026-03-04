@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WD-HAN // Content Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --surface3: #222222;
+    --border: #2a2a2a;
+    --accent: #e8ff00;
+    --accent2: #ff3c3c;
+    --text: #f0f0f0;
+    --muted: #666;
+    --muted2: #444;
+    --green: #00ff88;
+    --orange: #ff8c00;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--black);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .logo span {
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-left: 12px;
+    vertical-align: middle;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .stat-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .stat-pill strong {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* MAIN LAYOUT */
+  .app {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: calc(100vh - 61px);
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    background: var(--surface);
+    position: sticky;
+    top: 61px;
+    height: calc(100vh - 61px);
+    overflow-y: auto;
+  }
+
+  .sidebar-section {
+    padding: 0 20px;
+    margin-bottom: 28px;
+  }
+
+  .sidebar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted2);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  /* API CONNECT */
+  .connect-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+  }
+
+  .connect-box p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .input-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  input[type="text"], input[type="password"] {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 10px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input[type="text"]:focus, input[type="password"]:focus {
+    border-color: var(--accent);
+  }
+
+  input::placeholder { color: var(--muted2); }
+
+  .google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: white;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 9px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    width: 100%;
+  }
+
+  .google-btn:hover { background: #f5f5f5; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+
+  .google-logo {
+    width: 18px;
+    height: 18px;
+  }
+
+  .google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: white;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 9px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    width: 100%;
+  }
+  .google-btn:hover { background: #f5f5f5; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+
+  .btn {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    width: 100%;
+  }
+
+  .btn:hover { background: #fff; }
+
+  .btn.secondary {
+    background: var(--surface3);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn.secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--surface3); }
+
+  .btn.danger {
+    background: transparent;
+    color: var(--accent2);
+    border: 1px solid var(--accent2);
+  }
+
+  .btn.danger:hover { background: var(--accent2); color: white; }
+
+  /* FILTER SECTION */
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .filter-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 13px;
+  }
+
+  .filter-item:hover { background: var(--surface2); }
+  .filter-item.active { background: var(--surface2); color: var(--accent); }
+
+  .filter-item .count {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .filter-item.active .count { color: var(--accent); }
+
+  /* TAG CHIPS */
+  .tag-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 4px 9px;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--muted);
+  }
+
+  .tag-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .tag-chip.active { background: var(--accent); color: var(--black); border-color: var(--accent); }
+
+  /* MAIN CONTENT */
+  .main {
+    padding: 24px 28px;
+    background: var(--black);
+  }
+
+  /* TOOLBAR */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .search-wrap input {
+    padding-left: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .view-toggle {
+    display: flex;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .view-btn {
+    background: none;
+    border: none;
+    padding: 7px 12px;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+
+  .view-btn.active { background: var(--surface3); color: var(--accent); }
+
+  .sort-select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 7px 10px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  /* BULK BAR */
+  .bulk-bar {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  .bulk-bar.visible { display: flex; }
+  .bulk-bar .spacer { flex: 1; }
+
+  /* GRID VIEW */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  /* LIST VIEW */
+  .list { display: flex; flex-direction: column; gap: 6px; }
+
+  /* VIDEO CARD */
+  .video-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .video-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  .video-card.selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(232,255,0,0.2);
+  }
+
+  .card-checkbox {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+    width: 20px;
+    height: 20px;
+    background: var(--black);
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--accent);
+    transition: all 0.15s;
+  }
+
+  .video-card.selected .card-checkbox {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--black);
+  }
+
+  .thumb {
+    width: 100%;
+    aspect-ratio: 9/16;
+    background: var(--surface2);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .thumb-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted2);
+  }
+
+  .thumb-placeholder .icon { font-size: 32px; }
+  .thumb-placeholder .ext {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted2);
+  }
+
+  .thumb-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 12px;
+  }
+
+  .video-card:hover .thumb-overlay { opacity: 1; }
+
+  .play-btn {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .posted-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--green);
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  .posted-badge.partial { background: var(--orange); }
+
+  .card-info {
+    padding: 12px;
+  }
+
+  .card-name {
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 6px;
+  }
+
+  .card-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .card-tag {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+  }
+
+  .card-tag.content { border-color: #3a6aff44; color: #6a9fff; }
+  .card-tag.energy { border-color: #ff6a0044; color: #ff9a44; }
+
+  /* LIST ITEM */
+  .list-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 24px 48px 1fr auto auto auto;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .list-item:hover { border-color: var(--accent); }
+  .list-item.selected { border-color: var(--accent); background: var(--surface2); }
+
+  .list-check {
+    width: 18px;
+    height: 18px;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  .list-item.selected .list-check { background: var(--accent); border-color: var(--accent); color: var(--black); }
+
+  .list-thumb {
+    width: 48px;
+    height: 48px;
+    background: var(--surface2);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .list-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  .list-info .name {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px;
+  }
+
+  .list-info .meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .list-tags { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .list-status { font-family: 'DM Mono', monospace; font-size: 10px; text-align: right; }
+  .list-status.posted { color: var(--green); }
+  .list-status.unposted { color: var(--muted); }
+
+  .list-actions { display: flex; gap: 6px; }
+
+  .icon-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 8px;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* MODAL */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-backdrop.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--accent);
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px;
+    transition: color 0.15s;
+  }
+
+  .modal-close:hover { color: var(--text); }
+
+  .modal-body { padding: 24px; }
+
+  .form-group { margin-bottom: 18px; }
+
+  .form-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .tag-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag-option {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--muted);
+  }
+
+  .tag-option:hover { border-color: var(--muted); color: var(--text); }
+  .tag-option.selected { background: var(--accent); color: var(--black); border-color: var(--accent); }
+
+  textarea {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    width: 100%;
+    resize: vertical;
+    min-height: 80px;
+    outline: none;
+  }
+
+  textarea:focus { border-color: var(--accent); }
+
+  .modal-footer {
+    display: flex;
+    gap: 10px;
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .modal-footer .btn { width: auto; flex: 1; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+    color: var(--muted);
+  }
+
+  .empty-icon { font-size: 48px; margin-bottom: 16px; }
+  .empty-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 3px; color: var(--muted2); margin-bottom: 8px; }
+  .empty-desc { font-size: 13px; line-height: 1.6; max-width: 320px; }
+
+  /* FOLDER BREADCRUMB */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb-item {
+    cursor: pointer;
+    color: var(--muted);
+    transition: color 0.15s;
+  }
+
+  .breadcrumb-item:hover { color: var(--accent); }
+  .breadcrumb-item.current { color: var(--text); cursor: default; }
+  .breadcrumb-sep { color: var(--muted2); }
+
+  /* FOLDER CARD */
+  .folder-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .folder-card:hover { border-color: var(--accent); }
+  .folder-icon { font-size: 24px; }
+  .folder-name { font-size: 13px; font-weight: 500; }
+  .folder-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* NOTIFICATION */
+  .notif {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    z-index: 300;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  .notif.show { transform: translateY(0); opacity: 1; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted2); }
+
+  /* PHASE BANNER */
+  .phase-banner {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .phase-pill {
+    background: var(--accent);
+    color: var(--black);
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .phase-steps { display: flex; gap: 8px; }
+  .phase-step {
+    padding: 2px 10px;
+    border-radius: 3px;
+    font-size: 10px;
+    border: 1px solid var(--border);
+    color: var(--muted2);
+  }
+  .phase-step.current { border-color: var(--accent); color: var(--accent); }
+  .phase-step.done { border-color: var(--muted2); color: var(--muted); text-decoration: line-through; }
+
+  .divider { width: 1px; height: 14px; background: var(--border); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">WD-HAN <span>// CONTENT OPS</span></div>
+  </div>
+  <div class="header-right">
+    <div class="stat-pill">Library: <strong id="totalCount">0</strong> clips</div>
+    <div class="stat-pill">Tagged: <strong id="taggedCount">0</strong></div>
+    <div class="stat-pill">Unposted: <strong id="unpostedCount">0</strong></div>
+  </div>
+</header>
+
+<div class="phase-banner">
+  <div class="phase-pill">PHASE 1</div>
+  <div class="divider"></div>
+  <div class="phase-steps">
+    <div class="phase-step current">01 · Content Library</div>
+    <div class="phase-step">02 · Account Manager</div>
+    <div class="phase-step">03 · Scheduler</div>
+    <div class="phase-step">04 · Captions</div>
+    <div class="phase-step">05 · Calendar</div>
+    <div class="phase-step">06 · Dedup Engine</div>
+  </div>
+</div>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <!-- OAuth Connect -->
+    <div class="sidebar-section">
+      <div class="sidebar-label">Google Drive</div>
+      <div class="connect-box" id="connectBox">
+        <p>Sign in with Google to connect your Drive. Full read/write access.</p>
+        <button class="google-btn" onclick="startOAuth()">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Sign in with Google
+        </button>
+      </div>
+      <div id="connectedBox" style="display:none;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span style="color:var(--green);font-size:14px;">●</span>
+          <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--green);">CONNECTED</span>
+        </div>
+        <div id="connectedEmail" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:10px;word-break:break-all;"></div>
+        <div style="margin-bottom:8px;">
+          <input type="text" id="folderInput" placeholder="Folder ID (blank = My Drive root)" style="background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:6px 8px;color:var(--text);font-family:'DM Mono',monospace;font-size:10px;width:100%;outline:none;" />
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn secondary" style="font-size:10px;padding:6px 10px;" onclick="loadSpecificFolder()">Open Folder</button>
+          <button class="btn danger" style="font-size:10px;padding:6px 10px;" onclick="disconnectDrive()">Sign Out</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Filter -->
+    <div class="sidebar-section">
+      <div class="sidebar-label">Status</div>
+      <div class="filter-group">
+        <div class="filter-item active" onclick="filterStatus('all', this)">
+          All clips <span class="count" id="countAll">0</span>
+        </div>
+        <div class="filter-item" onclick="filterStatus('unposted', this)">
+          Unposted <span class="count" id="countUnposted">0</span>
+        </div>
+        <div class="filter-item" onclick="filterStatus('posted', this)">
+          Posted <span class="count" id="countPosted">0</span>
+        </div>
+        <div class="filter-item" onclick="filterStatus('untagged', this)">
+          Untagged <span class="count" id="countUntagged">0</span>
+        </div>
+        <div class="filter-item" onclick="filterStatus('flagged', this)">
+          ⚑ High potential <span class="count" id="countFlagged">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tag Filters -->
+    <div class="sidebar-section">
+      <div class="sidebar-label">Content Type</div>
+      <div class="tag-filters" id="contentTagFilters">
+        <div class="tag-chip" onclick="toggleTagFilter('live', this)">live</div>
+        <div class="tag-chip" onclick="toggleTagFilter('studio', this)">studio</div>
+        <div class="tag-chip" onclick="toggleTagFilter('bts', this)">bts</div>
+        <div class="tag-chip" onclick="toggleTagFilter('crowd', this)">crowd</div>
+        <div class="tag-chip" onclick="toggleTagFilter('candid', this)">candid</div>
+        <div class="tag-chip" onclick="toggleTagFilter('promo', this)">promo</div>
+        <div class="tag-chip" onclick="toggleTagFilter('rehearsal', this)">rehearsal</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Energy</div>
+      <div class="tag-filters">
+        <div class="tag-chip" onclick="toggleTagFilter('high-energy', this)">high energy</div>
+        <div class="tag-chip" onclick="toggleTagFilter('mid', this)">mid</div>
+        <div class="tag-chip" onclick="toggleTagFilter('chill', this)">chill</div>
+        <div class="tag-chip" onclick="toggleTagFilter('emotional', this)">emotional</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div style="display:flex;gap:8px;flex-direction:column;">
+        <button class="btn secondary" onclick="exportLibrary()">Export Library JSON</button>
+        <button class="btn secondary" onclick="importLibrary()">Import Library JSON</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)" />
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="Search clips..." oninput="renderLibrary()" />
+      </div>
+      <select class="sort-select" id="sortSelect" onchange="renderLibrary()">
+        <option value="name">Sort: Name</option>
+        <option value="recent">Sort: Recently Added</option>
+        <option value="untagged">Sort: Untagged First</option>
+        <option value="flagged">Sort: Flagged First</option>
+      </select>
+      <div class="view-toggle">
+        <button class="view-btn active" id="gridBtn" onclick="setView('grid')">⊞</button>
+        <button class="view-btn" id="listBtn" onclick="setView('list')">☰</button>
+      </div>
+      <button class="btn secondary" onclick="refreshDrive()" id="refreshBtn" style="width:auto;padding:7px 14px;">↻ Refresh</button>
+    </div>
+
+    <!-- Bulk Action Bar -->
+    <div class="bulk-bar" id="bulkBar">
+      <span id="bulkCount">0 selected</span>
+      <div class="spacer"></div>
+      <button class="icon-btn" onclick="bulkTag()">Tag Selected</button>
+      <button class="icon-btn" onclick="bulkMarkPosted()">Mark Posted</button>
+      <button class="icon-btn" onclick="bulkFlag()">⚑ Flag</button>
+      <button class="icon-btn danger" onclick="clearSelection()">✕ Clear</button>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb" id="breadcrumb"></div>
+
+    <!-- Content Area -->
+    <div id="contentArea"></div>
+  </main>
+</div>
+
+<!-- Tag Modal -->
+<div class="modal-backdrop" id="tagModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Tag Clip</div>
+      <button class="modal-close" onclick="closeModal('tagModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="modalFileName" style="font-size:13px;color:var(--muted);margin-bottom:20px;font-family:'DM Mono',monospace;"></div>
+
+      <div class="form-group">
+        <label class="form-label">Content Type</label>
+        <div class="tag-grid" id="contentTypeOptions"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Energy Level</label>
+        <div class="tag-grid" id="energyOptions"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Platform Fit</label>
+        <div class="tag-grid" id="platformOptions"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea id="clipNotes" placeholder="Any notes about this clip..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <div class="tag-grid" id="statusOptions"></div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;margin-top:4px;">
+        <input type="checkbox" id="flaggedCheck" style="accent-color:var(--accent);width:16px;height:16px;" />
+        <label for="flaggedCheck" style="font-size:13px;cursor:pointer;">⚑ Flag as high potential</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn secondary" onclick="closeModal('tagModal')">Cancel</button>
+      <button class="btn" onclick="saveTag()">Save Tags</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk Tag Modal -->
+<div class="modal-backdrop" id="bulkTagModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Bulk Tag</div>
+      <button class="modal-close" onclick="closeModal('bulkTagModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Tags will be applied to all selected clips. Existing tags will be preserved.</p>
+      <div class="form-group">
+        <label class="form-label">Content Type</label>
+        <div class="tag-grid" id="bulkContentType"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Energy Level</label>
+        <div class="tag-grid" id="bulkEnergy"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <div class="tag-grid" id="bulkStatus"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn secondary" onclick="closeModal('bulkTagModal')">Cancel</button>
+      <button class="btn" onclick="saveBulkTag()">Apply to Selected</button>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let state = {
+  apiKey: '',
+  rootFolderId: '',
+  connected: false,
+  files: [],           // raw from Drive
+  library: {},         // { fileId: { tags, notes, status, flagged, ... } }
+  view: 'grid',
+  statusFilter: 'all',
+  tagFilters: [],
+  folderStack: [],     // [{id, name}]
+  currentFolderId: '',
+  selectedIds: new Set(),
+  editingFileId: null,
+  bulkSelectedTags: { contentType: [], energy: [], status: [] }
+};
+
+const CONTENT_TYPES = ['live', 'studio', 'bts', 'crowd', 'candid', 'promo', 'rehearsal', 'music video', 'interview'];
+const ENERGY_LEVELS = ['high energy', 'mid', 'chill', 'emotional', 'hype', 'raw'];
+const PLATFORM_FIT = ['TikTok', 'Reels', 'YouTube Shorts', 'Stories'];
+const STATUS_OPTS = ['unposted', 'posted', 'scheduled', 'skip'];
+
+// ─── PERSISTENCE ──────────────────────────────────────────────────────────────
+function saveState() {
+  const toSave = {
+    apiKey: state.apiKey,
+    rootFolderId: state.rootFolderId,
+    library: state.library
+  };
+  localStorage.setItem('wdhan_state', JSON.stringify(toSave));
+}
+
+// ─── OAUTH CONFIG ─────────────────────────────────────────────────────────────
+const CLIENT_ID = '335288171960-jm2o6bka6n1p8g4s1p9s68h7je319e8o.apps.googleusercontent.com';
+const SCOPES = 'https://www.googleapis.com/auth/drive';
+let accessToken = '';
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
+    if (saved.library) state.library = saved.library;
+    if (saved.accessToken) {
+      accessToken = saved.accessToken;
+      state.connected = true;
+      document.getElementById('connectBox').style.display = 'none';
+      document.getElementById('connectedBox').style.display = 'block';
+      if (saved.userEmail) document.getElementById('connectedEmail').textContent = saved.userEmail;
+      loadFolder('root');
+    }
+  } catch(e) {}
+}
+
+// ─── DRIVE CONNECTION ─────────────────────────────────────────────────────────
+function startOAuth() {
+  const params = new URLSearchParams({
+    client_id: CLIENT_ID,
+    redirect_uri: window.location.href.split('?')[0],
+    response_type: 'token',
+    scope: SCOPES,
+    prompt: 'select_account'
+  });
+  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+}
+
+function handleOAuthCallback() {
+  const hash = window.location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+  const token = params.get('access_token');
+  if (token) {
+    accessToken = token;
+    window.history.replaceState({}, document.title, window.location.pathname);
+    fetchUserInfo();
+    loadFolder('root');
+  }
+}
+
+async function fetchUserInfo() {
+  try {
+    const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    const data = await res.json();
+    const email = data.email || '';
+    document.getElementById('connectedEmail').textContent = email;
+    document.getElementById('connectBox').style.display = 'none';
+    document.getElementById('connectedBox').style.display = 'block';
+    state.connected = true;
+    const toSave = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
+    toSave.accessToken = accessToken;
+    toSave.userEmail = email;
+    localStorage.setItem('wdhan_state', JSON.stringify(toSave));
+  } catch(e) {}
+}
+
+function loadSpecificFolder() {
+  const id = document.getElementById('folderInput').value.trim() || 'root';
+  state.folderStack = [{ id, name: id === 'root' ? 'My Drive' : id }];
+  loadFolder(id);
+}
+
+function disconnectDrive() {
+  accessToken = '';
+  state.connected = false;
+  state.files = [];
+  const saved = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
+  delete saved.accessToken;
+  delete saved.userEmail;
+  localStorage.setItem('wdhan_state', JSON.stringify(saved));
+  document.getElementById('connectBox').style.display = 'block';
+  document.getElementById('connectedBox').style.display = 'none';
+  renderLibrary();
+  updateStats();
+}
+
+async function loadFolder(folderId) {
+  if (!accessToken) { showNotif('Not signed in'); return; }
+  showNotif('Loading Drive...');
+  try {
+    const query = `'${folderId}' in parents and trashed=false`;
+    const fields = 'files(id,name,mimeType,size,modifiedTime,thumbnailLink,videoMediaMetadata)';
+    const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&fields=${encodeURIComponent(fields)}&pageSize=500`;
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } });
+    if (res.status === 401) { disconnectDrive(); showNotif('Session expired — please sign in again'); return; }
+    if (!res.ok) throw new Error(`Drive API error: ${res.status}`);
+    const data = await res.json();
+    state.files = data.files || [];
+    state.currentFolderId = folderId;
+    renderLibrary();
+    updateStats();
+    showNotif(`Loaded ${state.files.length} items`);
+  } catch(e) {
+    showNotif('Error: ' + e.message);
+  }
+}
+
+async function refreshDrive() {
+  if (!state.connected) { showNotif('Not connected'); return; }
+  await loadFolder(state.currentFolderId);
+}
+
+async function openFolder(folderId, folderName) {
+  state.currentFolderId = folderId;
+  state.folderStack.push({ id: folderId, name: folderName });
+  await loadFolder(folderId);
+}
+
+async function navBreadcrumb(index) {
+  const item = state.folderStack[index];
+  state.folderStack = state.folderStack.slice(0, index + 1);
+  state.currentFolderId = item.id;
+  await loadFolder(item.id);
+}
+
+// ─── FILTERING & SORTING ──────────────────────────────────────────────────────
+function filterStatus(status, el) {
+  state.statusFilter = status;
+  document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  renderLibrary();
+}
+
+function toggleTagFilter(tag, el) {
+  el.classList.toggle('active');
+  if (state.tagFilters.includes(tag)) {
+    state.tagFilters = state.tagFilters.filter(t => t !== tag);
+  } else {
+    state.tagFilters.push(tag);
+  }
+  renderLibrary();
+}
+
+function getFilteredFiles() {
+  const videoMimes = ['video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm', 'video/mpeg', 'video/x-matroska', 'video/'];
+  let files = state.files.filter(f => {
+    if (f.mimeType === 'application/vnd.google-apps.folder') return false;
+    return f.mimeType && (f.mimeType.startsWith('video/') || f.name.match(/\.(mp4|mov|avi|webm|mkv|m4v|wmv|flv)$/i));
+  });
+
+  const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
+  if (search) files = files.filter(f => f.name.toLowerCase().includes(search));
+
+  if (state.statusFilter !== 'all') {
+    files = files.filter(f => {
+      const meta = state.library[f.id] || {};
+      if (state.statusFilter === 'flagged') return meta.flagged;
+      if (state.statusFilter === 'untagged') return !meta.contentType?.length && !meta.energy?.length;
+      return (meta.status || 'unposted') === state.statusFilter;
+    });
+  }
+
+  if (state.tagFilters.length) {
+    files = files.filter(f => {
+      const meta = state.library[f.id] || {};
+      const allTags = [...(meta.contentType || []), ...(meta.energy || [])];
+      return state.tagFilters.some(t => allTags.includes(t));
+    });
+  }
+
+  const sort = document.getElementById('sortSelect')?.value || 'name';
+  if (sort === 'name') files.sort((a,b) => a.name.localeCompare(b.name));
+  else if (sort === 'recent') files.sort((a,b) => new Date(b.modifiedTime) - new Date(a.modifiedTime));
+  else if (sort === 'untagged') files.sort((a,b) => {
+    const aTagged = (state.library[a.id]?.contentType?.length || 0) > 0;
+    const bTagged = (state.library[b.id]?.contentType?.length || 0) > 0;
+    return aTagged - bTagged;
+  });
+  else if (sort === 'flagged') files.sort((a,b) => (state.library[b.id]?.flagged ? 1 : 0) - (state.library[a.id]?.flagged ? 1 : 0));
+
+  return files;
+}
+
+function getFolders() {
+  return state.files.filter(f => f.mimeType === 'application/vnd.google-apps.folder');
+}
+
+// ─── RENDER ────────────────────────────────────────────────────────────────────
+function renderLibrary() {
+  const area = document.getElementById('contentArea');
+  const folders = getFolders();
+  const files = getFilteredFiles();
+
+  // Breadcrumb
+  const bc = document.getElementById('breadcrumb');
+  bc.innerHTML = state.folderStack.map((item, i) => {
+    const isLast = i === state.folderStack.length - 1;
+    return `<span class="breadcrumb-item ${isLast ? 'current' : ''}" ${!isLast ? `onclick="navBreadcrumb(${i})"` : ''}>${item.name}</span>${!isLast ? '<span class="breadcrumb-sep">/</span>' : ''}`;
+  }).join('');
+
+  if (!state.connected && state.files.length === 0) {
+    area.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">📁</div>
+      <div class="empty-title">No Drive Connected</div>
+      <div class="empty-desc">Connect your Google Drive to start browsing and tagging your video library.</div>
+    </div>`;
+    return;
+  }
+
+  let html = '';
+
+  if (folders.length > 0) {
+    html += `<div style="margin-bottom:20px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase;margin-bottom:10px;">Folders (${folders.length})</div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));">`;
+    folders.forEach(f => {
+      html += `<div class="folder-card" onclick="openFolder('${f.id}','${escHtml(f.name)}')">
+        <span class="folder-icon">📂</span>
+        <div>
+          <div class="folder-name">${escHtml(f.name)}</div>
+          <div class="folder-meta">folder</div>
+        </div>
+      </div>`;
+    });
+    html += '</div></div>';
+  }
+
+  if (files.length === 0) {
+    html += `<div class="empty-state">
+      <div class="empty-icon">🎬</div>
+      <div class="empty-title">No clips found</div>
+      <div class="empty-desc">No videos match your current filters.</div>
+    </div>`;
+  } else {
+    html += `<div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase;margin-bottom:10px;">${files.length} clips</div>`;
+    if (state.view === 'grid') {
+      html += `<div class="grid">`;
+      files.forEach(f => { html += renderCard(f); });
+      html += `</div>`;
+    } else {
+      html += `<div class="list">`;
+      files.forEach(f => { html += renderListItem(f); });
+      html += `</div>`;
+    }
+  }
+
+  area.innerHTML = html;
+  updateStats();
+}
+
+function renderCard(f) {
+  const meta = state.library[f.id] || {};
+  const isSelected = state.selectedIds.has(f.id);
+  const status = meta.status || 'unposted';
+  const allTags = [...(meta.contentType || []), ...(meta.energy || [])];
+  const tagsHtml = allTags.slice(0,3).map(t => `<span class="card-tag">${t}</span>`).join('');
+
+  const thumb = f.thumbnailLink
+    ? `<img src="${f.thumbnailLink}" alt="" />`
+    : `<div class="thumb-placeholder"><div class="icon">🎬</div><div class="ext">${f.name.split('.').pop().toUpperCase()}</div></div>`;
+
+  const badge = status === 'posted' ? `<div class="posted-badge">POSTED</div>` : '';
+  const flagged = meta.flagged ? `<div style="position:absolute;top:8px;right:${status==='posted'?'64px':'8px'};font-size:14px;">⚑</div>` : '';
+
+  return `<div class="video-card ${isSelected ? 'selected' : ''}" data-id="${f.id}">
+    <div class="card-checkbox" onclick="toggleSelect(event,'${f.id}')">${isSelected ? '✓' : ''}</div>
+    <div class="thumb">
+      ${thumb}
+      ${badge}${flagged}
+      <div class="thumb-overlay">
+        <button class="play-btn" onclick="openTag('${f.id}')">✎</button>
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="card-name" title="${escHtml(f.name)}">${escHtml(f.name)}</div>
+      <div class="card-meta">${formatSize(f.size)} · ${status.toUpperCase()}</div>
+      <div class="card-tags">${tagsHtml || '<span style="font-size:10px;color:var(--muted2);font-family:DM Mono,monospace;">untagged</span>'}</div>
+    </div>
+  </div>`;
+}
+
+function renderListItem(f) {
+  const meta = state.library[f.id] || {};
+  const isSelected = state.selectedIds.has(f.id);
+  const status = meta.status || 'unposted';
+  const allTags = [...(meta.contentType || []), ...(meta.energy || [])];
+  const tagsHtml = allTags.slice(0,4).map(t => `<span class="card-tag">${t}</span>`).join('');
+
+  const thumb = f.thumbnailLink
+    ? `<img src="${f.thumbnailLink}" alt="" />`
+    : `<span style="font-size:22px;">🎬</span>`;
+
+  return `<div class="list-item ${isSelected ? 'selected' : ''}" data-id="${f.id}">
+    <div class="list-check" onclick="toggleSelect(event,'${f.id}')">${isSelected ? '✓' : ''}</div>
+    <div class="list-thumb">${thumb}</div>
+    <div class="list-info">
+      <div class="name" title="${escHtml(f.name)}">${meta.flagged ? '⚑ ' : ''}${escHtml(f.name)}</div>
+      <div class="meta">${formatSize(f.size)} · modified ${formatDate(f.modifiedTime)}</div>
+    </div>
+    <div class="list-tags">${tagsHtml}</div>
+    <div class="list-status ${status}">${status.toUpperCase()}</div>
+    <div class="list-actions">
+      <button class="icon-btn" onclick="openTag('${f.id}')">✎ Tag</button>
+    </div>
+  </div>`;
+}
+
+// ─── SELECTION ────────────────────────────────────────────────────────────────
+function toggleSelect(e, id) {
+  e.stopPropagation();
+  if (state.selectedIds.has(id)) state.selectedIds.delete(id);
+  else state.selectedIds.add(id);
+  const card = document.querySelector(`[data-id="${id}"]`);
+  if (card) card.classList.toggle('selected', state.selectedIds.has(id));
+  const checkbox = card?.querySelector('.card-checkbox, .list-check');
+  if (checkbox) checkbox.textContent = state.selectedIds.has(id) ? '✓' : '';
+  updateBulkBar();
+}
+
+function clearSelection() {
+  state.selectedIds.clear();
+  document.querySelectorAll('.video-card.selected, .list-item.selected').forEach(el => el.classList.remove('selected'));
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  const n = state.selectedIds.size;
+  document.getElementById('bulkCount').textContent = `${n} selected`;
+  bar.classList.toggle('visible', n > 0);
+}
+
+function bulkMarkPosted() {
+  state.selectedIds.forEach(id => {
+    if (!state.library[id]) state.library[id] = {};
+    state.library[id].status = 'posted';
+  });
+  saveState();
+  clearSelection();
+  renderLibrary();
+  showNotif('Marked as posted');
+}
+
+function bulkFlag() {
+  state.selectedIds.forEach(id => {
+    if (!state.library[id]) state.library[id] = {};
+    state.library[id].flagged = true;
+  });
+  saveState();
+  clearSelection();
+  renderLibrary();
+  showNotif('Flagged as high potential');
+}
+
+// ─── TAG MODAL ────────────────────────────────────────────────────────────────
+function buildTagOptions(containerId, options, selectedValues) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = options.map(opt => `
+    <div class="tag-option ${selectedValues?.includes(opt) ? 'selected' : ''}" onclick="toggleTagOption(this)">${opt}</div>
+  `).join('');
+}
+
+function toggleTagOption(el) {
+  el.classList.toggle('selected');
+}
+
+function getSelectedOptions(containerId) {
+  return Array.from(document.querySelectorAll(`#${containerId} .tag-option.selected`)).map(el => el.textContent.trim());
+}
+
+function openTag(fileId) {
+  state.editingFileId = fileId;
+  const f = state.files.find(f => f.id === fileId);
+  const meta = state.library[fileId] || {};
+  document.getElementById('modalFileName').textContent = f?.name || fileId;
+  buildTagOptions('contentTypeOptions', CONTENT_TYPES, meta.contentType || []);
+  buildTagOptions('energyOptions', ENERGY_LEVELS, meta.energy || []);
+  buildTagOptions('platformOptions', PLATFORM_FIT, meta.platform || []);
+  buildTagOptions('statusOptions', STATUS_OPTS, [meta.status || 'unposted']);
+  document.getElementById('clipNotes').value = meta.notes || '';
+  document.getElementById('flaggedCheck').checked = !!meta.flagged;
+  document.getElementById('tagModal').classList.add('open');
+}
+
+function saveTag() {
+  const id = state.editingFileId;
+  if (!state.library[id]) state.library[id] = {};
+  state.library[id].contentType = getSelectedOptions('contentTypeOptions');
+  state.library[id].energy = getSelectedOptions('energyOptions');
+  state.library[id].platform = getSelectedOptions('platformOptions');
+  const statusSel = getSelectedOptions('statusOptions');
+  state.library[id].status = statusSel[0] || 'unposted';
+  state.library[id].notes = document.getElementById('clipNotes').value;
+  state.library[id].flagged = document.getElementById('flaggedCheck').checked;
+  saveState();
+  closeModal('tagModal');
+  renderLibrary();
+  showNotif('Tags saved');
+}
+
+// ─── BULK TAG ─────────────────────────────────────────────────────────────────
+function bulkTag() {
+  buildTagOptions('bulkContentType', CONTENT_TYPES, []);
+  buildTagOptions('bulkEnergy', ENERGY_LEVELS, []);
+  buildTagOptions('bulkStatus', STATUS_OPTS, []);
+  document.getElementById('bulkTagModal').classList.add('open');
+}
+
+function saveBulkTag() {
+  const ct = getSelectedOptions('bulkContentType');
+  const en = getSelectedOptions('bulkEnergy');
+  const st = getSelectedOptions('bulkStatus');
+  state.selectedIds.forEach(id => {
+    if (!state.library[id]) state.library[id] = {};
+    if (ct.length) state.library[id].contentType = [...new Set([...(state.library[id].contentType || []), ...ct])];
+    if (en.length) state.library[id].energy = [...new Set([...(state.library[id].energy || []), ...en])];
+    if (st.length) state.library[id].status = st[0];
+  });
+  saveState();
+  closeModal('bulkTagModal');
+  clearSelection();
+  renderLibrary();
+  showNotif(`Bulk tagged ${state.selectedIds.size || 'selected'} clips`);
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// ─── STATS ────────────────────────────────────────────────────────────────────
+function updateStats() {
+  const videoFiles = state.files.filter(f => f.mimeType?.startsWith('video/') || f.name.match(/\.(mp4|mov|avi|webm|mkv|m4v)$/i));
+  const total = videoFiles.length;
+  const tagged = videoFiles.filter(f => (state.library[f.id]?.contentType?.length || 0) > 0).length;
+  const posted = videoFiles.filter(f => (state.library[f.id]?.status) === 'posted').length;
+  const unposted = total - posted;
+  const untagged = total - tagged;
+  const flagged = videoFiles.filter(f => state.library[f.id]?.flagged).length;
+
+  document.getElementById('totalCount').textContent = total;
+  document.getElementById('taggedCount').textContent = tagged;
+  document.getElementById('unpostedCount').textContent = unposted;
+  document.getElementById('countAll').textContent = total;
+  document.getElementById('countUnposted').textContent = unposted;
+  document.getElementById('countPosted').textContent = posted;
+  document.getElementById('countUntagged').textContent = untagged;
+  document.getElementById('countFlagged').textContent = flagged;
+}
+
+// ─── IMPORT / EXPORT ─────────────────────────────────────────────────────────
+function exportLibrary() {
+  const data = JSON.stringify({ library: state.library, exportedAt: new Date().toISOString() }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'wdhan-library.json'; a.click();
+  URL.revokeObjectURL(url);
+  showNotif('Library exported');
+}
+
+function importLibrary() {
+  document.getElementById('importFile').click();
+}
+
+function handleImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (data.library) {
+        state.library = { ...state.library, ...data.library };
+        saveState();
+        renderLibrary();
+        showNotif('Library imported');
+      }
+    } catch(err) { showNotif('Import failed'); }
+  };
+  reader.readAsText(file);
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function setView(v) {
+  state.view = v;
+  document.getElementById('gridBtn').classList.toggle('active', v === 'grid');
+  document.getElementById('listBtn').classList.toggle('active', v === 'list');
+  renderLibrary();
+}
+
+function showNotif(msg) {
+  const n = document.getElementById('notif');
+  n.textContent = msg;
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 2500);
+}
+
+function formatSize(bytes) {
+  if (!bytes) return '—';
+  const mb = parseInt(bytes) / 1048576;
+  return mb > 1000 ? `${(mb/1024).toFixed(1)} GB` : `${mb.toFixed(0)} MB`;
+}
+
+function formatDate(dt) {
+  if (!dt) return '';
+  return new Date(dt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function escHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+handleOAuthCallback();
+loadState();
+renderLibrary();
+updateStats();
+</script>
+</body>
+</html>
