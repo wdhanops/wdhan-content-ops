@@ -162,8 +162,58 @@
   .phase-banner { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 7px 28px; display: flex; align-items: center; gap: 10px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); flex-wrap: wrap; }
   .phase-pill { background: var(--accent); color: var(--black); border-radius: 3px; padding: 2px 8px; font-weight: 500; font-size: 10px; letter-spacing: 1px; }
   .phase-steps { display: flex; gap: 6px; flex-wrap: wrap; }
-  .phase-step { padding: 2px 8px; border-radius: 3px; font-size: 10px; border: 1px solid var(--border); color: var(--muted2); }
+  .phase-step { padding: 2px 8px; border-radius: 3px; font-size: 10px; border: 1px solid var(--border); color: var(--muted2); cursor: pointer; transition: all 0.15s; }
+  .phase-step:hover { border-color: var(--muted); color: var(--muted); }
   .phase-step.current { border-color: var(--accent); color: var(--accent); }
+
+  /* PHASE PANELS */
+  .phase-panel { display: none; }
+  .phase-panel.active { display: block; }
+
+  /* ACCOUNT MANAGER */
+  .am-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .am-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+  .am-filter-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 6px 12px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); cursor: pointer; transition: all 0.15s; letter-spacing: 1px; }
+  .am-filter-btn:hover { border-color: var(--muted); color: var(--text); }
+  .am-filter-btn.active { background: var(--surface2); border-color: var(--accent); color: var(--accent); }
+
+  .am-stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 24px; }
+  .am-stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px 18px; }
+  .am-stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 2px; color: var(--accent); line-height: 1; }
+  .am-stat-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1px; margin-top: 4px; }
+
+  .accounts-table { width: 100%; border-collapse: collapse; }
+  .accounts-table th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--muted2); text-transform: uppercase; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .accounts-table td { padding: 11px 12px; border-bottom: 1px solid rgba(42,42,42,0.5); font-size: 13px; vertical-align: middle; }
+  .accounts-table tr:hover td { background: var(--surface); }
+  .accounts-table tr:last-child td { border-bottom: none; }
+
+  .status-badge { display: inline-block; border-radius: 3px; padding: 2px 7px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; font-weight: 500; }
+  .status-badge.active { background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); color: var(--green); }
+  .status-badge.warming { background: rgba(232,255,0,0.1); border: 1px solid rgba(232,255,0,0.3); color: var(--accent); }
+  .status-badge.paused { background: rgba(102,102,102,0.1); border: 1px solid rgba(102,102,102,0.3); color: var(--muted); }
+  .status-badge.banned { background: rgba(255,60,60,0.1); border: 1px solid rgba(255,60,60,0.3); color: var(--accent2); }
+
+  .platform-badge { display: inline-flex; align-items: center; gap: 5px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--muted); }
+  .platform-badge.tiktok { color: #69C9D0; }
+  .platform-badge.instagram { color: #E1306C; }
+  .platform-badge.youtube { color: #FF0000; }
+
+  .username-link { color: inherit; text-decoration: none; font-weight: 500; }
+  .username-link:hover { color: var(--accent); }
+
+  .stat-cell { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-align: right; }
+  .stat-cell strong { color: var(--text); font-weight: 500; }
+
+  .am-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; text-align: center; color: var(--muted); }
+  .am-empty .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .am-empty .empty-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--muted2); margin-bottom: 6px; }
+
+  .secret-field { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); cursor: pointer; letter-spacing: 2px; }
+  .secret-field:hover { color: var(--text); }
+
+  .diet-tags { display: flex; flex-wrap: wrap; gap: 3px; max-width: 200px; }
+  .diet-tag { background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; padding: 1px 5px; font-size: 9px; font-family: 'DM Mono', monospace; color: var(--muted); }
   .divider { width: 1px; height: 14px; background: var(--border); }
   .notif { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid var(--accent); border-radius: 6px; padding: 10px 16px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); z-index: 300; transform: translateY(60px); opacity: 0; transition: all 0.25s; }
   .notif.show { transform: translateY(0); opacity: 1; }
@@ -266,11 +316,11 @@
 </header>
 
 <div class="phase-banner">
-  <div class="phase-pill">PHASE 1</div>
+  <div class="phase-pill" id="activePhasePill">PHASE 1</div>
   <div class="divider"></div>
   <div class="phase-steps">
-    <div class="phase-step current">01 · Content Library</div>
-    <div class="phase-step">02 · Account Manager</div>
+    <div class="phase-step current" onclick="switchPhase(1)">01 · Content Library</div>
+    <div class="phase-step" onclick="switchPhase(2)">02 · Account Manager</div>
     <div class="phase-step">03 · Scheduler</div>
     <div class="phase-step">04 · Captions</div>
     <div class="phase-step">05 · Calendar</div>
@@ -278,6 +328,8 @@
   </div>
 </div>
 
+<!-- PHASE 1: CONTENT LIBRARY -->
+<div class="phase-panel active" id="phase1">
 <div class="app">
   <aside class="sidebar">
 
@@ -460,7 +512,146 @@
   </div>
 </div>
 
+</div><!-- end phase1 -->
+
 <div class="notif" id="notif"></div>
+
+<!-- PHASE 2: ACCOUNT MANAGER -->
+<div class="phase-panel" id="phase2">
+  <div style="padding: 24px 28px;">
+
+    <!-- Stats Bar -->
+    <div class="am-stats-bar" id="amStatsBar"></div>
+
+    <!-- Toolbar -->
+    <div class="am-toolbar">
+      <div class="search-wrap" style="max-width:280px;">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="amSearch" placeholder="Search accounts..." oninput="renderAccounts()" />
+      </div>
+      <div class="am-filters">
+        <button class="am-filter-btn active" onclick="filterAccounts('all',this)">All</button>
+        <button class="am-filter-btn" onclick="filterAccounts('tiktok',this)">TikTok</button>
+        <button class="am-filter-btn" onclick="filterAccounts('instagram',this)">Instagram</button>
+        <button class="am-filter-btn" onclick="filterAccounts('youtube',this)">YouTube</button>
+        <button class="am-filter-btn" onclick="filterAccounts('active',this)">Active</button>
+        <button class="am-filter-btn" onclick="filterAccounts('warming',this)">Warming Up</button>
+        <button class="am-filter-btn" onclick="filterAccounts('paused',this)">Paused</button>
+        <button class="am-filter-btn" onclick="filterAccounts('banned',this)">Banned</button>
+      </div>
+      <div style="flex:1;"></div>
+      <button class="btn sm" onclick="openAccountModal()">+ Add Account</button>
+    </div>
+
+    <!-- Table -->
+    <div id="accountsTableWrap"></div>
+  </div>
+</div>
+
+<!-- ACCOUNT MODAL -->
+<div class="modal-backdrop" id="accountModal">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-header">
+      <div class="modal-title" id="accountModalTitle">Add Account</div>
+      <button class="modal-close" onclick="closeModal('accountModal')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="form-group">
+          <label class="form-label">Platform</label>
+          <select id="accPlatform" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:7px 10px;color:var(--text);font-family:'DM Mono',monospace;font-size:11px;width:100%;outline:none;">
+            <option value="tiktok">TikTok</option>
+            <option value="instagram">Instagram</option>
+            <option value="youtube">YouTube</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select id="accStatus" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:7px 10px;color:var(--text);font-family:'DM Mono',monospace;font-size:11px;width:100%;outline:none;">
+            <option value="active">Active</option>
+            <option value="warming">Warming Up</option>
+            <option value="paused">Paused</option>
+            <option value="banned">Banned</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" id="accUsername" placeholder="@username" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Persona <span style="color:var(--muted);font-size:9px;letter-spacing:0;text-transform:none;margin-left:4px;">one-liner defining this account's voice</span></label>
+        <input type="text" id="accPersona" placeholder="e.g. obsessive superfan who lives for live clips" />
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="text" id="accEmail" placeholder="account@email.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input type="text" id="accPhone" placeholder="+1 555 000 0000" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" id="accPassword" placeholder="••••••••••" />
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+        <div class="form-group">
+          <label class="form-label">Followers</label>
+          <input type="text" id="accFollowers" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Total Views</label>
+          <input type="text" id="accViews" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Total Likes</label>
+          <input type="text" id="accLikes" placeholder="0" />
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="form-group">
+          <label class="form-label">Avg Views / Post</label>
+          <input type="text" id="accAvgViews" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Total Comments</label>
+          <input type="text" id="accComments" placeholder="0" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Max Posts / Day</label>
+        <input type="text" id="accMaxPosts" placeholder="3" style="max-width:100px;" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Content Diet <span style="color:var(--muted);font-size:9px;letter-spacing:0;text-transform:none;margin-left:4px;">tags this account prefers</span></label>
+        <div class="tag-option-grid" id="accDietOptions"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea id="accNotes" placeholder="e.g. needs new SIM, shadowbanned week of March 3..."></textarea>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn danger" id="accDeleteBtn" onclick="deleteAccount()" style="display:none;">Delete</button>
+      <button class="btn secondary" onclick="closeModal('accountModal')">Cancel</button>
+      <button class="btn" onclick="saveAccount()">Save</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const CLIENT_ID = '335288171960-jm2o6bka6n1p8g4s1p9s68h7je319e8o.apps.googleusercontent.com';
@@ -499,7 +690,7 @@ let saveTimer = null;         // debounce timer
 async function saveState() {
   // Always mirror to localStorage as fast fallback
   const existing = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
-  localStorage.setItem('wdhan_state', JSON.stringify({ ...existing, library: state.library, customTags: state.customTags }));
+  localStorage.setItem('wdhan_state', JSON.stringify({ ...existing, library: state.library, customTags: state.customTags, accounts: state.accounts }));
 
   // Debounce Drive saves — wait 1.5s of inactivity before writing
   clearTimeout(saveTimer);
@@ -509,7 +700,7 @@ async function saveState() {
 async function saveToDrive() {
   if (!accessToken) return;
   try {
-    const payload = JSON.stringify({ library: state.library, customTags: state.customTags, savedAt: new Date().toISOString() });
+    const payload = JSON.stringify({ library: state.library, customTags: state.customTags, accounts: state.accounts, savedAt: new Date().toISOString() });
     const blob = new Blob([payload], { type: 'application/json' });
 
     if (driveFileId) {
@@ -559,7 +750,7 @@ async function loadFromDrive() {
 
     if (!files.length) {
       // No library file yet — try localStorage fallback
-      if (cached.library) { state.library = cached.library; state.customTags = cached.customTags || []; }
+      if (cached.library) { state.library = cached.library; state.customTags = cached.customTags || []; state.accounts = cached.accounts || []; }
       return false;
     }
 
@@ -574,6 +765,7 @@ async function loadFromDrive() {
     const fileData = await fileRes.json();
     if (fileData.library) state.library = fileData.library;
     if (fileData.customTags) state.customTags = fileData.customTags;
+    if (fileData.accounts) state.accounts = fileData.accounts;
     showSyncIndicator('loaded');
     return true;
   } catch(e) {
@@ -581,7 +773,7 @@ async function loadFromDrive() {
     // Fall back to localStorage
     try {
       const cached = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
-      if (cached.library) { state.library = cached.library; state.customTags = cached.customTags || []; }
+      if (cached.library) { state.library = cached.library; state.customTags = cached.customTags || []; state.accounts = cached.accounts || []; }
     } catch(e2) {}
     return false;
   }
@@ -603,6 +795,7 @@ function loadState() {
     // Load local tags as immediate fallback while Drive loads
     if (saved.library) state.library = saved.library;
     if (saved.customTags) state.customTags = saved.customTags;
+    if (saved.accounts) state.accounts = saved.accounts;
     if (saved.accessToken) {
       if (saved.userEmail && saved.userEmail.toLowerCase() !== ALLOWED_EMAIL.toLowerCase()) {
         delete saved.accessToken; delete saved.userEmail;
@@ -1176,6 +1369,251 @@ handleOAuthCallback();
 loadState();
 renderLibrary();
 updateStats();
+
+// ─── PHASE SWITCHING ──────────────────────────────────────────────────────────
+function switchPhase(n) {
+  document.querySelectorAll('.phase-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.phase-step').forEach((s, i) => s.classList.toggle('current', i + 1 === n));
+  document.getElementById(`phase${n}`)?.classList.add('active');
+  document.getElementById('activePhasePill').textContent = `PHASE ${n}`;
+  if (n === 2) { renderAccounts(); renderAmStats(); }
+}
+
+// ─── ACCOUNT MANAGER ──────────────────────────────────────────────────────────
+// accounts stored as array in state.accounts
+if (!state.accounts) state.accounts = [];
+
+let amFilter = 'all';
+let editingAccountId = null;
+
+const PLATFORM_URLS = {
+  tiktok: 'https://tiktok.com/@',
+  instagram: 'https://instagram.com/',
+  youtube: 'https://youtube.com/@'
+};
+
+const PLATFORM_ICONS = {
+  tiktok: '𝕋',
+  instagram: '📸',
+  youtube: '▶'
+};
+
+function filterAccounts(f, el) {
+  amFilter = f;
+  document.querySelectorAll('.am-filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderAccounts();
+}
+
+function getFilteredAccounts() {
+  let accounts = state.accounts || [];
+  const search = (document.getElementById('amSearch')?.value || '').toLowerCase();
+  if (search) accounts = accounts.filter(a => a.username?.toLowerCase().includes(search) || a.persona?.toLowerCase().includes(search) || a.notes?.toLowerCase().includes(search));
+  if (amFilter === 'all') return accounts;
+  if (['tiktok','instagram','youtube'].includes(amFilter)) return accounts.filter(a => a.platform === amFilter);
+  return accounts.filter(a => a.status === amFilter);
+}
+
+function renderAmStats() {
+  const accounts = state.accounts || [];
+  const active = accounts.filter(a => a.status === 'active').length;
+  const warming = accounts.filter(a => a.status === 'warming').length;
+  const paused = accounts.filter(a => a.status === 'paused').length;
+  const banned = accounts.filter(a => a.status === 'banned').length;
+  const totalFollowers = accounts.reduce((sum, a) => sum + (parseInt(a.followers) || 0), 0);
+  const totalViews = accounts.reduce((sum, a) => sum + (parseInt(a.views) || 0), 0);
+
+  document.getElementById('amStatsBar').innerHTML = `
+    <div class="am-stat-card"><div class="am-stat-val">${accounts.length}</div><div class="am-stat-label">Total Accounts</div></div>
+    <div class="am-stat-card"><div class="am-stat-val" style="color:var(--green)">${active}</div><div class="am-stat-label">Active</div></div>
+    <div class="am-stat-card"><div class="am-stat-val" style="color:var(--accent)">${warming}</div><div class="am-stat-label">Warming Up</div></div>
+    <div class="am-stat-card"><div class="am-stat-val" style="color:var(--muted)">${paused}</div><div class="am-stat-label">Paused</div></div>
+    <div class="am-stat-card"><div class="am-stat-val" style="color:var(--accent2)">${banned}</div><div class="am-stat-label">Banned</div></div>
+    <div class="am-stat-card"><div class="am-stat-val" style="font-size:22px;">${formatStatNum(totalFollowers)}</div><div class="am-stat-label">Total Followers</div></div>
+    <div class="am-stat-card"><div class="am-stat-val" style="font-size:22px;">${formatStatNum(totalViews)}</div><div class="am-stat-label">Total Views</div></div>
+  `;
+}
+
+function renderAccounts() {
+  const accounts = getFilteredAccounts();
+  const wrap = document.getElementById('accountsTableWrap');
+
+  if (!accounts.length) {
+    wrap.innerHTML = `<div class="am-empty"><div class="empty-icon">📱</div><div class="empty-title">${(state.accounts||[]).length === 0 ? 'No Accounts Yet' : 'No Matches'}</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">${(state.accounts||[]).length === 0 ? 'Add your first account to get started.' : 'Try a different filter.'}</div></div>`;
+    return;
+  }
+
+  wrap.innerHTML = `
+    <table class="accounts-table">
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Username</th>
+          <th>Persona</th>
+          <th>Status</th>
+          <th style="text-align:right;">Followers</th>
+          <th style="text-align:right;">Views</th>
+          <th style="text-align:right;">Likes</th>
+          <th style="text-align:right;">Avg Views</th>
+          <th>Diet</th>
+          <th>Login</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${accounts.map(a => renderAccountRow(a)).join('')}
+      </tbody>
+    </table>`;
+}
+
+function renderAccountRow(a) {
+  const profileUrl = PLATFORM_URLS[a.platform] + (a.username||'').replace('@','');
+  const usernameDisplay = a.username ? `<a href="${profileUrl}" target="_blank" class="username-link">${escH(a.username)}</a>` : '—';
+  const statusClass = { active:'active', warming:'warming', paused:'paused', banned:'banned' }[a.status] || 'paused';
+  const statusLabel = { active:'ACTIVE', warming:'WARMING', paused:'PAUSED', banned:'BANNED' }[a.status] || a.status?.toUpperCase();
+  const platformClass = a.platform || '';
+  const dietHtml = (a.diet||[]).slice(0,3).map(t => `<span class="diet-tag">${escH(t)}</span>`).join('') + ((a.diet||[]).length > 3 ? `<span class="diet-tag">+${a.diet.length-3}</span>` : '');
+
+  return `<tr>
+    <td><span class="platform-badge ${platformClass}">${PLATFORM_ICONS[a.platform]||''} ${(a.platform||'').toUpperCase()}</span></td>
+    <td>${usernameDisplay}</td>
+    <td style="font-size:12px;color:var(--muted);max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${esc(a.persona||'')}">${escH(a.persona||'—')}</td>
+    <td><span class="status-badge ${statusClass}">${statusLabel}</span></td>
+    <td class="stat-cell"><strong>${formatStatNum(a.followers)}</strong></td>
+    <td class="stat-cell"><strong>${formatStatNum(a.views)}</strong></td>
+    <td class="stat-cell"><strong>${formatStatNum(a.likes)}</strong></td>
+    <td class="stat-cell"><strong>${formatStatNum(a.avgViews)}</strong></td>
+    <td><div class="diet-tags">${dietHtml||'<span style="font-size:10px;color:var(--muted2);font-family:DM Mono,monospace;">—</span>'}</div></td>
+    <td>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);line-height:1.6;">
+        <div>${escH(a.email||'—')}</div>
+        <div>${escH(a.phone||'—')}</div>
+        ${a.password ? `<div class="secret-field" onclick="togglePassword(this,'${esc(a.id)}')">••••••••</div>` : '<div style="color:var(--muted2);">—</div>'}
+      </div>
+    </td>
+    <td><button class="icon-btn" onclick="openAccountModal('${esc(a.id)}')">✎ Edit</button></td>
+  </tr>`;
+}
+
+function togglePassword(el, id) {
+  const account = (state.accounts||[]).find(a => a.id === id);
+  if (!account) return;
+  if (el.textContent === '••••••••') {
+    el.textContent = account.password;
+    el.style.color = 'var(--text)';
+    el.style.letterSpacing = 'normal';
+    setTimeout(() => { el.textContent = '••••••••'; el.style.color = 'var(--muted)'; el.style.letterSpacing = '2px'; }, 5000);
+  } else {
+    el.textContent = '••••••••';
+    el.style.color = 'var(--muted)';
+    el.style.letterSpacing = '2px';
+  }
+}
+
+function openAccountModal(id) {
+  editingAccountId = id || null;
+  const isEdit = !!id;
+  document.getElementById('accountModalTitle').textContent = isEdit ? 'Edit Account' : 'Add Account';
+  document.getElementById('accDeleteBtn').style.display = isEdit ? 'block' : 'none';
+
+  // Build diet options from all tags
+  document.getElementById('accDietOptions').innerHTML = getAllTags().map(t =>
+    `<div class="tag-option" onclick="this.classList.toggle('selected')">${escH(t)}</div>`
+  ).join('');
+
+  if (isEdit) {
+    const a = (state.accounts||[]).find(a => a.id === id);
+    if (!a) return;
+    document.getElementById('accPlatform').value = a.platform || 'tiktok';
+    document.getElementById('accStatus').value = a.status || 'active';
+    document.getElementById('accUsername').value = a.username || '';
+    document.getElementById('accPersona').value = a.persona || '';
+    document.getElementById('accEmail').value = a.email || '';
+    document.getElementById('accPhone').value = a.phone || '';
+    document.getElementById('accPassword').value = a.password || '';
+    document.getElementById('accFollowers').value = a.followers || '';
+    document.getElementById('accViews').value = a.views || '';
+    document.getElementById('accLikes').value = a.likes || '';
+    document.getElementById('accAvgViews').value = a.avgViews || '';
+    document.getElementById('accComments').value = a.comments || '';
+    document.getElementById('accMaxPosts').value = a.maxPosts || '3';
+    document.getElementById('accNotes').value = a.notes || '';
+    // Select diet tags
+    const diet = a.diet || [];
+    document.querySelectorAll('#accDietOptions .tag-option').forEach(el => {
+      if (diet.includes(el.textContent.trim())) el.classList.add('selected');
+    });
+  } else {
+    document.getElementById('accPlatform').value = 'tiktok';
+    document.getElementById('accStatus').value = 'active';
+    ['accUsername','accPersona','accEmail','accPhone','accPassword','accFollowers','accViews','accLikes','accAvgViews','accComments','accNotes'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('accMaxPosts').value = '3';
+  }
+
+  document.getElementById('accountModal').classList.add('open');
+}
+
+function saveAccount() {
+  const username = document.getElementById('accUsername').value.trim();
+  if (!username) { showNotif('Username required'); return; }
+
+  const diet = Array.from(document.querySelectorAll('#accDietOptions .tag-option.selected')).map(el => el.textContent.trim());
+
+  const accountData = {
+    id: editingAccountId || `acc_${Date.now()}`,
+    platform: document.getElementById('accPlatform').value,
+    status: document.getElementById('accStatus').value,
+    username,
+    persona: document.getElementById('accPersona').value.trim(),
+    email: document.getElementById('accEmail').value.trim(),
+    phone: document.getElementById('accPhone').value.trim(),
+    password: document.getElementById('accPassword').value,
+    followers: document.getElementById('accFollowers').value.trim(),
+    views: document.getElementById('accViews').value.trim(),
+    likes: document.getElementById('accLikes').value.trim(),
+    avgViews: document.getElementById('accAvgViews').value.trim(),
+    comments: document.getElementById('accComments').value.trim(),
+    maxPosts: document.getElementById('accMaxPosts').value.trim() || '3',
+    diet,
+    notes: document.getElementById('accNotes').value.trim(),
+    addedAt: editingAccountId ? ((state.accounts||[]).find(a => a.id === editingAccountId)?.addedAt || new Date().toISOString()) : new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+
+  if (!state.accounts) state.accounts = [];
+  if (editingAccountId) {
+    const idx = state.accounts.findIndex(a => a.id === editingAccountId);
+    if (idx > -1) state.accounts[idx] = accountData; else state.accounts.push(accountData);
+  } else {
+    state.accounts.push(accountData);
+  }
+
+  saveState();
+  closeModal('accountModal');
+  renderAccounts();
+  renderAmStats();
+  showNotif(editingAccountId ? 'Account updated' : 'Account added');
+}
+
+function deleteAccount() {
+  if (!editingAccountId) return;
+  if (!confirm('Delete this account? This cannot be undone.')) return;
+  state.accounts = (state.accounts||[]).filter(a => a.id !== editingAccountId);
+  saveState();
+  closeModal('accountModal');
+  renderAccounts();
+  renderAmStats();
+  showNotif('Account deleted');
+}
+
+function formatStatNum(n) {
+  if (!n || n === '0' || n === 0) return '—';
+  const num = parseInt(n);
+  if (isNaN(num)) return '—';
+  if (num >= 1000000) return (num/1000000).toFixed(1) + 'M';
+  if (num >= 1000) return (num/1000).toFixed(1) + 'K';
+  return num.toLocaleString();
+}
 </script>
 </body>
 </html>
