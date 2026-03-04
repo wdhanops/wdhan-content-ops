@@ -258,6 +258,7 @@
 <header>
   <div class="logo">WD-HAN <span>// CONTENT OPS</span></div>
   <div class="header-right">
+    <div id="syncIndicator" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--green);transition:opacity 0.3s;"></div>
     <div class="stat-pill">Library: <strong id="totalCount">0</strong> clips</div>
     <div class="stat-pill">Tagged: <strong id="taggedCount">0</strong></div>
     <div class="stat-pill">Unposted: <strong id="unpostedCount">0</strong></div>
@@ -498,14 +499,116 @@ const STATUS_OPTS = ['unposted','posted','scheduled','skip'];
 
 function getAllTags() { return [...new Set([...state.presetTags, ...state.customTags])]; }
 
-function saveState() {
+// ─── DRIVE-BACKED PERSISTENCE ─────────────────────────────────────────────────
+const LIBRARY_FILENAME = 'wdhan-library.json';
+let driveFileId = null;       // ID of the library file in Drive
+let saveTimer = null;         // debounce timer
+
+async function saveState() {
+  // Always mirror to localStorage as fast fallback
   const existing = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
   localStorage.setItem('wdhan_state', JSON.stringify({ ...existing, library: state.library, customTags: state.customTags }));
+
+  // Debounce Drive saves — wait 1.5s of inactivity before writing
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => saveToDrive(), 1500);
+}
+
+async function saveToDrive() {
+  if (!accessToken) return;
+  try {
+    const payload = JSON.stringify({ library: state.library, customTags: state.customTags, savedAt: new Date().toISOString() });
+    const blob = new Blob([payload], { type: 'application/json' });
+
+    if (driveFileId) {
+      // Update existing file
+      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: blob
+      });
+    } else {
+      // Create new file
+      const meta = { name: LIBRARY_FILENAME, mimeType: 'application/json', description: 'WD-HAN Content Ops library data — do not delete' };
+      const form = new FormData();
+      form.append('metadata', new Blob([JSON.stringify(meta)], { type: 'application/json' }));
+      form.append('file', blob);
+      const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}` },
+        body: form
+      });
+      const data = await res.json();
+      driveFileId = data.id;
+      // Cache file ID in localStorage
+      const existing = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
+      localStorage.setItem('wdhan_state', JSON.stringify({ ...existing, driveFileId }));
+    }
+    showSyncIndicator('saved');
+  } catch(e) {
+    console.error('Drive save error:', e);
+    showSyncIndicator('error');
+  }
+}
+
+async function loadFromDrive() {
+  if (!accessToken) return false;
+  try {
+    // Check localStorage for cached file ID first
+    const cached = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
+    if (cached.driveFileId) driveFileId = cached.driveFileId;
+
+    // Search Drive for the library file
+    const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(`name='${LIBRARY_FILENAME}' and trashed=false`)}&fields=files(id,modifiedTime)&pageSize=1`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    const data = await res.json();
+    const files = data.files || [];
+
+    if (!files.length) {
+      // No library file yet — try localStorage fallback
+      if (cached.library) { state.library = cached.library; state.customTags = cached.customTags || []; }
+      return false;
+    }
+
+    driveFileId = files[0].id;
+    // Cache it
+    localStorage.setItem('wdhan_state', JSON.stringify({ ...cached, driveFileId }));
+
+    // Download the file content
+    const fileRes = await fetch(`https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    const fileData = await fileRes.json();
+    if (fileData.library) state.library = fileData.library;
+    if (fileData.customTags) state.customTags = fileData.customTags;
+    showSyncIndicator('loaded');
+    return true;
+  } catch(e) {
+    console.error('Drive load error:', e);
+    // Fall back to localStorage
+    try {
+      const cached = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
+      if (cached.library) { state.library = cached.library; state.customTags = cached.customTags || []; }
+    } catch(e2) {}
+    return false;
+  }
+}
+
+function showSyncIndicator(status) {
+  const el = document.getElementById('syncIndicator');
+  if (!el) return;
+  if (status === 'saved') { el.textContent = '✓ Synced'; el.style.color = 'var(--green)'; }
+  else if (status === 'loaded') { el.textContent = '✓ Library loaded'; el.style.color = 'var(--green)'; }
+  else if (status === 'error') { el.textContent = '⚠ Sync error'; el.style.color = 'var(--orange)'; }
+  clearTimeout(el._timer);
+  el._timer = setTimeout(() => { el.textContent = ''; }, 3000);
 }
 
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
+    // Load local tags as immediate fallback while Drive loads
     if (saved.library) state.library = saved.library;
     if (saved.customTags) state.customTags = saved.customTags;
     if (saved.accessToken) {
@@ -516,6 +619,8 @@ function loadState() {
         accessToken = saved.accessToken;
         state.connected = true;
         showConnected(saved.userEmail || '');
+        // Load from Drive then refresh UI
+        loadFromDrive().then(() => { renderTagSidebar(); renderLibrary(); updateStats(); });
         loadFolder('root');
       }
     }
@@ -576,6 +681,8 @@ async function fetchUserInfo() {
     state.connected = true;
     const existing = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
     localStorage.setItem('wdhan_state', JSON.stringify({ ...existing, accessToken, userEmail: email }));
+    // Load library from Drive after fresh login
+    loadFromDrive().then(() => { renderTagSidebar(); renderLibrary(); updateStats(); });
   } catch(e) { console.error('Auth error:', e.message); }
 }
 
