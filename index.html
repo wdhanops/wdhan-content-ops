@@ -330,14 +330,6 @@
       </div>
     </div>
 
-    <div class="sidebar-section">
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <button class="btn secondary sm" style="width:100%;" onclick="exportLibrary()">Export Library JSON</button>
-        <button class="btn secondary sm" style="width:100%;" onclick="importLibrary()">Import Library JSON</button>
-        <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)" />
-      </div>
-    </div>
-
   </aside>
 
   <main class="main">
@@ -736,7 +728,7 @@ async function fetchFolderVideoCounts(folders) {
   if (!folders.length) return;
   for (const folder of folders) {
     try {
-      const q = `'${folder.id}' in parents and trashed=false and (mimeType contains 'video/' or name contains '.mp4' or name contains '.mov' or name contains '.avi' or name contains '.webm' or name contains '.mkv')`;
+      const q = `'${folder.id}' in parents and trashed=false and (mimeType contains 'video/' or name contains '.mp4' or name contains '.mov' or name contains '.m4v' or name contains '.avi' or name contains '.webm' or name contains '.mkv' or name contains '.3gp' or name contains '.mts' or name contains '.hevc')`;
       const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(q)}&fields=files(id)&pageSize=500`, { headers: { Authorization: `Bearer ${accessToken}` } });
       const data = await res.json();
       state.folderVideoCounts[folder.id] = (data.files || []).length;
@@ -803,7 +795,7 @@ async function searchAllDrive() {
     } while (pageToken);
 
     // Also catch files by extension
-    const extRes = await fetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent("(name contains '.mp4' or name contains '.mov' or name contains '.avi' or name contains '.webm' or name contains '.mkv') and trashed=false")}&fields=${encodeURIComponent('files(id,name,mimeType,size,modifiedTime,thumbnailLink,parents,webViewLink,videoMediaMetadata)')}&pageSize=200`, { headers: { Authorization: `Bearer ${accessToken}` } });
+    const extRes = await fetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent("(name contains '.mp4' or name contains '.mov' or name contains '.m4v' or name contains '.avi' or name contains '.webm' or name contains '.mkv' or name contains '.3gp' or name contains '.mts' or name contains '.hevc') and trashed=false")}&fields=${encodeURIComponent('files(id,name,mimeType,size,modifiedTime,thumbnailLink,parents,webViewLink,videoMediaMetadata)')}&pageSize=200`, { headers: { Authorization: `Bearer ${accessToken}` } });
     const extData = await extRes.json();
     const seen = new Set(all.map(f => f.id));
     (extData.files||[]).forEach(f => { if (!seen.has(f.id)) all.push(f); });
@@ -927,7 +919,7 @@ function toggleTagFilter(tag) {
 
 // ─── FILTERING ────────────────────────────────────────────────────────────────
 function getVideoFiles() {
-  return state.files.filter(f => f.mimeType !== 'application/vnd.google-apps.folder' && (f.mimeType?.startsWith('video/') || f.name?.match(/\.(mp4|mov|avi|webm|mkv|m4v|wmv|flv)$/i)));
+  return state.files.filter(f => f.mimeType !== 'application/vnd.google-apps.folder' && (f.mimeType?.startsWith('video/') || f.name?.match(/\.(mp4|mov|m4v|avi|webm|mkv|wmv|flv|3gp|3g2|mts|m2ts|ts|hevc|heic|mxf|ogv|qt)$/i)));
 }
 
 function getAllFiles() {
