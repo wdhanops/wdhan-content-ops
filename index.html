@@ -484,8 +484,6 @@ async function fetchUserInfo() {
       } catch(e) {}
     }
 
-    alert('Signed in as: [' + email + ']\nExpected: [' + ALLOWED_EMAIL.toLowerCase() + ']\nMatch: ' + (email === ALLOWED_EMAIL.toLowerCase()));
-
     if (!email || email !== ALLOWED_EMAIL.toLowerCase()) {
       accessToken = '';
       showAccessDenied(email || 'unknown');
