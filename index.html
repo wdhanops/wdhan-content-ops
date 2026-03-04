@@ -168,12 +168,92 @@
   .notif { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid var(--accent); border-radius: 6px; padding: 10px 16px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); z-index: 300; transform: translateY(60px); opacity: 0; transition: all 0.25s; }
   .notif.show { transform: translateY(0); opacity: 1; }
   .section-hdr { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--muted2); text-transform: uppercase; margin-bottom: 10px; }
+
+  /* LOGIN SCREEN */
+  .login-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--black);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .login-screen.hidden { display: none; }
+
+  .login-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 52px 48px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .login-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 8px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .login-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .login-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--border);
+    margin: 0 auto 32px;
+  }
+
+  .login-tagline {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .login-footer {
+    margin-top: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+    letter-spacing: 1px;
+  }
   ::-webkit-scrollbar { width: 4px; height: 4px; }
   ::-webkit-scrollbar-track { background: var(--surface); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 </style>
 </head>
 <body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">WD-HAN</div>
+    <div class="login-sub">// Content Ops</div>
+    <div class="login-divider"></div>
+    <div class="login-tagline">Sign in with your authorized Google account to access the dashboard.</div>
+    <button class="google-btn" onclick="startOAuth()" style="max-width:280px;margin:0 auto;">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Sign in with Google
+    </button>
+    <div class="login-footer">AUTHORIZED ACCESS ONLY</div>
+  </div>
+</div>
 
 <header>
   <div class="logo">WD-HAN <span>// CONTENT OPS</span></div>
@@ -497,18 +577,35 @@ async function fetchUserInfo() {
 }
 
 function showAccessDenied(email) {
-  document.body.innerHTML = `
-    <div style="min-height:100vh;background:#080808;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;">
-      <div style="background:#111;border:1px solid #ff3c3c;border-radius:8px;padding:48px;text-align:center;max-width:400px;">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:4px;color:#ff3c3c;margin-bottom:8px;">ACCESS DENIED</div>
-        <div style="font-family:'DM Mono',monospace;font-size:12px;color:#666;margin-bottom:24px;">${email}</div>
-        <div style="font-size:14px;color:#666;margin-bottom:28px;line-height:1.6;">This account is not authorized to access WD-HAN Content Ops.</div>
-        <button onclick="window.location.reload()" style="background:#e8ff00;color:#080808;border:none;border-radius:4px;padding:10px 24px;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:1px;cursor:pointer;text-transform:uppercase;">Try Again</button>
-      </div>
-    </div>`;
+  const card = document.querySelector('.login-card');
+  card.innerHTML = `
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:4px;color:var(--accent2);margin-bottom:4px;">ACCESS DENIED</div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:28px;letter-spacing:1px;">// CONTENT OPS</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:8px;line-height:1.6;">This account is not authorized.</div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent2);margin-bottom:28px;word-break:break-all;">${email}</div>
+    <button onclick="resetLogin()" style="background:var(--accent);color:var(--black);border:none;border-radius:4px;padding:10px 28px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:1px;cursor:pointer;text-transform:uppercase;">Try Again</button>
+    <div style="margin-top:24px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted2);letter-spacing:1px;">AUTHORIZED ACCESS ONLY</div>
+  `;
+  document.getElementById('loginScreen').classList.remove('hidden');
+}
+
+function resetLogin() {
+  const card = document.querySelector('.login-card');
+  card.innerHTML = `
+    <div class="login-logo">WD-HAN</div>
+    <div class="login-sub">// Content Ops</div>
+    <div class="login-divider"></div>
+    <div class="login-tagline">Sign in with your authorized Google account to access the dashboard.</div>
+    <button class="google-btn" onclick="startOAuth()" style="max-width:280px;margin:0 auto;">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Sign in with Google
+    </button>
+    <div class="login-footer">AUTHORIZED ACCESS ONLY</div>
+  `;
 }
 
 function showConnected(email) {
+  document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('connectBox').style.display = 'none';
   document.getElementById('connectedBox').style.display = 'block';
   document.getElementById('connectedEmail').textContent = email;
@@ -519,6 +616,7 @@ function disconnectDrive() {
   const saved = JSON.parse(localStorage.getItem('wdhan_state') || '{}');
   delete saved.accessToken; delete saved.userEmail;
   localStorage.setItem('wdhan_state', JSON.stringify(saved));
+  document.getElementById('loginScreen').classList.remove('hidden');
   document.getElementById('connectBox').style.display = 'block';
   document.getElementById('connectedBox').style.display = 'none';
   renderLibrary(); updateStats();
