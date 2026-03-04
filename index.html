@@ -462,6 +462,8 @@ async function fetchUserInfo() {
     const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${accessToken}` } });
     const data = await res.json();
     const email = data.email || '';
+    console.log('DEBUG auth email:', email, '| expected:', ALLOWED_EMAIL);
+    alert('Signed in as: ' + email + '\nExpected: ' + ALLOWED_EMAIL + '\nMatch: ' + (email.toLowerCase() === ALLOWED_EMAIL.toLowerCase()));
     if (email.toLowerCase() !== ALLOWED_EMAIL.toLowerCase()) {
       accessToken = '';
       showAccessDenied(email);
