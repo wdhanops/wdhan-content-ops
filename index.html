@@ -390,7 +390,7 @@
 
 <script>
 const CLIENT_ID = '335288171960-jm2o6bka6n1p8g4s1p9s68h7je319e8o.apps.googleusercontent.com';
-const SCOPES = 'https://www.googleapis.com/auth/drive';
+const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/userinfo.email';
 const ALLOWED_EMAIL = 'wdhanmusic@gmail.com';
 let accessToken = '';
 
@@ -461,12 +461,12 @@ async function fetchUserInfo() {
   try {
     const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${accessToken}` } });
     const data = await res.json();
-    const email = data.email || '';
+    const email = (data.email || '').trim().toLowerCase();
     console.log('DEBUG auth email:', email, '| expected:', ALLOWED_EMAIL);
-    alert('Signed in as: ' + email + '\nExpected: ' + ALLOWED_EMAIL + '\nMatch: ' + (email.toLowerCase() === ALLOWED_EMAIL.toLowerCase()));
-    if (email.toLowerCase() !== ALLOWED_EMAIL.toLowerCase()) {
+    alert('Signed in as: [' + email + ']\nExpected: [' + ALLOWED_EMAIL.toLowerCase() + ']\nMatch: ' + (email === ALLOWED_EMAIL.toLowerCase()));
+    if (!email || email !== ALLOWED_EMAIL.toLowerCase()) {
       accessToken = '';
-      showAccessDenied(email);
+      showAccessDenied(data.email || 'unknown');
       return;
     }
     showConnected(email);
