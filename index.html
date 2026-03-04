@@ -577,6 +577,14 @@
         </div>
       </div>
 
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:12px 14px;">
+        <input type="checkbox" id="accIsMain" style="accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;" />
+        <div>
+          <label for="accIsMain" style="font-size:13px;cursor:pointer;font-weight:500;">Main Account</label>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Pins to top of list. Use for your primary WD-HAN channel — not in the content account rotation.</div>
+        </div>
+      </div>
+
       <div class="form-group">
         <label class="form-label">Username</label>
         <input type="text" id="accUsername" placeholder="@username" />
@@ -632,6 +640,16 @@
       <div class="form-group">
         <label class="form-label">Max Posts / Day</label>
         <input type="text" id="accMaxPosts" placeholder="3" style="max-width:100px;" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Metricool Status</label>
+        <select id="accMetricool" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:7px 10px;color:var(--text);font-family:'DM Mono',monospace;font-size:11px;width:100%;outline:none;">
+          <option value="not_connected">Not Connected</option>
+          <option value="connected">Connected</option>
+          <option value="pending">Pending</option>
+          <option value="error">Connection Error</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -1409,22 +1427,34 @@ function getFilteredAccounts() {
   let accounts = state.accounts || [];
   const search = (document.getElementById('amSearch')?.value || '').toLowerCase();
   if (search) accounts = accounts.filter(a => a.username?.toLowerCase().includes(search) || a.persona?.toLowerCase().includes(search) || a.notes?.toLowerCase().includes(search));
-  if (amFilter === 'all') return accounts;
-  if (['tiktok','instagram','youtube'].includes(amFilter)) return accounts.filter(a => a.platform === amFilter);
-  return accounts.filter(a => a.status === amFilter);
+  if (amFilter !== 'all') {
+    if (['tiktok','instagram','youtube'].includes(amFilter)) accounts = accounts.filter(a => a.platform === amFilter);
+    else accounts = accounts.filter(a => a.status === amFilter);
+  }
+  // Always pin main accounts to top
+  return [...accounts.filter(a => a.isMain), ...accounts.filter(a => !a.isMain)];
 }
 
 function renderAmStats() {
   const accounts = state.accounts || [];
-  const active = accounts.filter(a => a.status === 'active').length;
-  const warming = accounts.filter(a => a.status === 'warming').length;
-  const paused = accounts.filter(a => a.status === 'paused').length;
-  const banned = accounts.filter(a => a.status === 'banned').length;
+  const mainAccounts = accounts.filter(a => a.isMain);
+  const contentAccounts = accounts.filter(a => !a.isMain);
+  const active = contentAccounts.filter(a => a.status === 'active').length;
+  const warming = contentAccounts.filter(a => a.status === 'warming').length;
+  const paused = contentAccounts.filter(a => a.status === 'paused').length;
+  const banned = contentAccounts.filter(a => a.status === 'banned').length;
   const totalFollowers = accounts.reduce((sum, a) => sum + (parseInt(a.followers) || 0), 0);
   const totalViews = accounts.reduce((sum, a) => sum + (parseInt(a.views) || 0), 0);
 
   document.getElementById('amStatsBar').innerHTML = `
-    <div class="am-stat-card"><div class="am-stat-val">${accounts.length}</div><div class="am-stat-label">Total Accounts</div></div>
+    <div class="am-stat-card" style="border-color:rgba(232,255,0,0.3);background:rgba(232,255,0,0.03);">
+      <div class="am-stat-val">${mainAccounts.length}</div>
+      <div class="am-stat-label" style="color:var(--accent);">Main Accounts</div>
+    </div>
+    <div class="am-stat-card">
+      <div class="am-stat-val">${contentAccounts.length}</div>
+      <div class="am-stat-label">Content Accounts</div>
+    </div>
     <div class="am-stat-card"><div class="am-stat-val" style="color:var(--green)">${active}</div><div class="am-stat-label">Active</div></div>
     <div class="am-stat-card"><div class="am-stat-val" style="color:var(--accent)">${warming}</div><div class="am-stat-label">Warming Up</div></div>
     <div class="am-stat-card"><div class="am-stat-val" style="color:var(--muted)">${paused}</div><div class="am-stat-label">Paused</div></div>
@@ -1457,6 +1487,7 @@ function renderAccounts() {
           <th style="text-align:right;">Avg Views</th>
           <th>Diet</th>
           <th>Login</th>
+          <th>Metricool</th>
           <th></th>
         </tr>
       </thead>
@@ -1473,10 +1504,14 @@ function renderAccountRow(a) {
   const statusLabel = { active:'ACTIVE', warming:'WARMING', paused:'PAUSED', banned:'BANNED' }[a.status] || a.status?.toUpperCase();
   const platformClass = a.platform || '';
   const dietHtml = (a.diet||[]).slice(0,3).map(t => `<span class="diet-tag">${escH(t)}</span>`).join('') + ((a.diet||[]).length > 3 ? `<span class="diet-tag">+${a.diet.length-3}</span>` : '');
+  const rowStyle = a.isMain ? 'background:rgba(232,255,0,0.03);border-left:3px solid var(--accent);' : '';
+  const accountTypeBadge = a.isMain
+    ? `<span style="display:inline-block;background:var(--accent);color:var(--black);border-radius:3px;padding:2px 6px;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;margin-left:6px;">MAIN</span>`
+    : `<span style="display:inline-block;border:1px solid var(--border);color:var(--muted2);border-radius:3px;padding:2px 6px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;margin-left:6px;">CONTENT</span>`;
 
-  return `<tr>
+  return `<tr style="${rowStyle}">
     <td><span class="platform-badge ${platformClass}">${PLATFORM_ICONS[a.platform]||''} ${(a.platform||'').toUpperCase()}</span></td>
-    <td>${usernameDisplay}</td>
+    <td><div style="display:flex;align-items:center;">${usernameDisplay}${accountTypeBadge}</div></td>
     <td style="font-size:12px;color:var(--muted);max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${esc(a.persona||'')}">${escH(a.persona||'—')}</td>
     <td><span class="status-badge ${statusClass}">${statusLabel}</span></td>
     <td class="stat-cell"><strong>${formatStatNum(a.followers)}</strong></td>
@@ -1491,6 +1526,7 @@ function renderAccountRow(a) {
         ${a.password ? `<div class="secret-field" onclick="togglePassword(this,'${esc(a.id)}')">••••••••</div>` : '<div style="color:var(--muted2);">—</div>'}
       </div>
     </td>
+    <td>${renderMetricoolBadge(a.metricool)}</td>
     <td><button class="icon-btn" onclick="openAccountModal('${esc(a.id)}')">✎ Edit</button></td>
   </tr>`;
 }
@@ -1537,6 +1573,8 @@ function openAccountModal(id) {
     document.getElementById('accAvgViews').value = a.avgViews || '';
     document.getElementById('accComments').value = a.comments || '';
     document.getElementById('accMaxPosts').value = a.maxPosts || '3';
+    document.getElementById('accMetricool').value = a.metricool || 'not_connected';
+    document.getElementById('accIsMain').checked = !!a.isMain;
     document.getElementById('accNotes').value = a.notes || '';
     // Select diet tags
     const diet = a.diet || [];
@@ -1548,6 +1586,8 @@ function openAccountModal(id) {
     document.getElementById('accStatus').value = 'active';
     ['accUsername','accPersona','accEmail','accPhone','accPassword','accFollowers','accViews','accLikes','accAvgViews','accComments','accNotes'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('accMaxPosts').value = '3';
+    document.getElementById('accMetricool').value = 'not_connected';
+    document.getElementById('accIsMain').checked = false;
   }
 
   document.getElementById('accountModal').classList.add('open');
@@ -1574,6 +1614,8 @@ function saveAccount() {
     avgViews: document.getElementById('accAvgViews').value.trim(),
     comments: document.getElementById('accComments').value.trim(),
     maxPosts: document.getElementById('accMaxPosts').value.trim() || '3',
+    metricool: document.getElementById('accMetricool').value,
+    isMain: document.getElementById('accIsMain').checked,
     diet,
     notes: document.getElementById('accNotes').value.trim(),
     addedAt: editingAccountId ? ((state.accounts||[]).find(a => a.id === editingAccountId)?.addedAt || new Date().toISOString()) : new Date().toISOString(),
@@ -1604,6 +1646,17 @@ function deleteAccount() {
   renderAccounts();
   renderAmStats();
   showNotif('Account deleted');
+}
+
+function renderMetricoolBadge(status) {
+  const map = {
+    connected:     { label: '✓ Connected',  color: 'var(--green)',   bg: 'rgba(0,255,136,0.1)',  border: 'rgba(0,255,136,0.3)' },
+    pending:       { label: '⏳ Pending',    color: 'var(--accent)',  bg: 'rgba(232,255,0,0.1)',  border: 'rgba(232,255,0,0.3)' },
+    error:         { label: '⚠ Error',      color: 'var(--accent2)', bg: 'rgba(255,60,60,0.1)',  border: 'rgba(255,60,60,0.3)' },
+    not_connected: { label: '— Not set',    color: 'var(--muted2)',  bg: 'transparent',           border: 'var(--border)' },
+  };
+  const s = map[status] || map.not_connected;
+  return `<span style="display:inline-block;border-radius:3px;padding:2px 7px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;background:${s.bg};border:1px solid ${s.border};color:${s.color};white-space:nowrap;">${s.label}</span>`;
 }
 
 function formatStatNum(n) {
